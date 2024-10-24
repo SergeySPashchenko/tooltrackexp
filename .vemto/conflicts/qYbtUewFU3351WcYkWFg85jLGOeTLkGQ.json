@@ -1,0 +1,9 @@
+{
+    "conflicts": [
+        {
+            "id": "074aacd7-213f-40e3-a509-cc30ab740cc2",
+            "currentContent": "<?php\n\nuse Illuminate\\Foundation\\Application;\nuse Illuminate\\Foundation\\Configuration\\Exceptions;\nuse Illuminate\\Foundation\\Configuration\\Middleware;\n\nreturn Application::configure(basePath: dirname(__DIR__))\n    ->withRouting(\n        web: __DIR__.'/../routes/web.php',\n        api: __DIR__.'/../routes/api.php',\n        commands: __DIR__.'/../routes/console.php',\n        health: '/up',\n    )\n    ->withMiddleware(function (Middleware $middleware) {\n        $middleware->web(['throttle:global']);\n        $middleware->api(['throttle:global']);\n    })\n    ->withExceptions(function (Exceptions $exceptions) {\n        //\n    })->create();\n",
+            "newContent": "<?php\n\nuse Illuminate\\Support\\Facades\\Route;\nuse Illuminate\\Foundation\\Application;\nuse Illuminate\\Foundation\\Configuration\\Exceptions;\nuse Illuminate\\Foundation\\Configuration\\Middleware;\n\nreturn Application::configure(basePath: dirname(__DIR__))\n    ->withProviders()\n    ->withRouting(\n        web: __DIR__ . '/../routes/web.php',\n        // api: __DIR__.'/../routes/api.php',\n        commands: __DIR__ . '/../routes/console.php',\n        // channels: __DIR__.'/../routes/channels.php',\n        health: '/up',\n\n        then: function () {\n            Route::middleware('web')->group(__DIR__ . '/../routes/app.php');\n            Route::middleware('api')->group(__DIR__ . '/../routes/app-api.php');\n        }\n    )\n    ->withMiddleware(function (Middleware $middleware) {\n        //\n    })\n    ->withExceptions(function (Exceptions $exceptions) {\n        //\n    })\n    ->create();\n"
+        }
+    ]
+}

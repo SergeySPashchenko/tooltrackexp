@@ -12,7 +12,8 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        $middleware->web(['throttle:global']);
+        $middleware->api(['throttle:global']);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

@@ -102,7 +102,7 @@ class AppServiceProvider extends ServiceProvider
             // Handle Discarded Attribute Violations
             Model::handleDiscardedAttributeViolationUsing(function ($model, $key) {
                 logger()->channel('discord')
-                    ->info("Discarded attributes [{$key}] for model [".get_class($model).']');
+                    ->info('Discarded attributes ['.implode($key).'] for model ['.get_class($model).']');
                 logger()
                     ->info("Discarded attributes [{$key}] for model [".get_class($model).']');
             });
